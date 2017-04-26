@@ -25,7 +25,8 @@ public class MoviedbUtil {
 		ResultSet myRs = null;
 		String nextTitle= "";
 		String fullStarName = "";
-		List<String> star = new ArrayList<String>();
+		List<Star> star = new ArrayList<Star>();
+		List<Integer> tempStarId = new ArrayList<Integer>();
 		List<String> genreList = new ArrayList<String>();
 		
 		try {
@@ -51,7 +52,7 @@ public class MoviedbUtil {
 			// process result set
 			while (myRs.next()) {
 				
-				
+				// Moves RS cursor forward, used to check if current RS row is dupilcate
 				if (!myRs.isLast()) {
 				myRs.next();
 				nextTitle = myRs.getString("title");
@@ -74,11 +75,12 @@ public class MoviedbUtil {
 				String firstName = myRs.getString("first_name");
 				String lastName = myRs.getString("last_name");
 				fullStarName = firstName + " " + lastName;
-				if(!star.contains(fullStarName)) {
+				if(!tempStarId.contains(sId)) {
 				//if (!fullStarName.contains(firstName) && !fullStarName.contains(lastName)) {
 					//fullStarName += firstName + " " + lastName + "<br/>";
-					star.add(fullStarName);
-					
+					Star tempStar = new Star(sId, fullStarName);
+					star.add(tempStar);
+					tempStarId.add(sId);
 				}
 				
 				if (!genreList.contains(genres)) {
@@ -89,13 +91,14 @@ public class MoviedbUtil {
 			// create new student object
 				if(!title.equals(nextTitle)){
 //					Movie tempMovie = new Movie(id, title, director, year, fullStarName, genreList);
-					Movie tempMovie = new Movie(id, title, director, year,sId, star, genreList);
+					Movie tempMovie = new Movie(id, title, director, year, star, genreList);
 					
 					// add it to the list of students
 					movies.add(tempMovie);	
 					fullStarName  = "";
-					star = new ArrayList<String>();
+					tempStarId = new ArrayList<Integer>();
 					genreList = new ArrayList<String>();
+					star = new ArrayList<Star>();
 				}
 			}
 			
@@ -115,7 +118,8 @@ public class MoviedbUtil {
 		ResultSet myRs = null;
 		String nextTitle= "";
 		String fullStarName = "";
-		List<String> star = new ArrayList<String>();
+		List<Star> star = new ArrayList<Star>();
+		List<Integer> tempStarId = new ArrayList<Integer>();
 		List<String> genreList = new ArrayList<String>();
 		
 		try {
@@ -125,7 +129,7 @@ public class MoviedbUtil {
 			// create sql statement
 		
 			
-			String sql =String.format("select m.id, m.title, m.year, m.director, s.first_name,"
+			String sql =String.format("select m.id, m.title, m.year, m.director,s.id AS s_Id, s.first_name,"
 					+ "s.last_name, g.name, m.banner_url, m.trailer_url from movies m, genres_in_movies gim, stars s,"
 					+ " stars_in_movies sim, genres g where "
 					+ "(sim.star_id = s.id and sim.movie_id = m.id and g.id = gim.genre_id "
@@ -153,6 +157,7 @@ public class MoviedbUtil {
 					String title = myRs.getString("title");
 					int id = myRs.getInt("id");
 					int year = myRs.getInt("year");
+					int sId = myRs.getInt("S_Id");
 					String director = myRs.getString("director");
 					String genres = myRs.getString("name");
 					String firstName = myRs.getString("first_name");
@@ -162,8 +167,10 @@ public class MoviedbUtil {
 					
 					
 					fullStarName = firstName + " " + lastName;
-					if(!star.contains(fullStarName)) {
-						star.add(fullStarName);
+					if(!tempStarId.contains(sId)) {
+						Star tempStar = new Star(sId, fullStarName);
+						star.add(tempStar);
+						tempStarId.add(sId);
 						
 					}
 					
@@ -175,13 +182,14 @@ public class MoviedbUtil {
 				// create new student object
 					if(!title.equals(nextTitle)){
 //						Movie tempMovie = new Movie(id, title, director, year, fullStarName, genreList);
-						 singleMovie = new Movie(id, title, director, year,banner_url, trailer_url, star, genreList);
+						 singleMovie = new Movie(id, title, director, year,banner_url, trailer_url, genreList, star);
 //						 singleMovie = new Movie(124, "jlj", "asdas", 11,"9999", "901", star, genreList);
 						
 						// add it to the list of students
 						fullStarName  = "";
-						star = new ArrayList<String>();
+						star = new ArrayList<Star>();
 						genreList = new ArrayList<String>();
+						tempStarId = new ArrayList<Integer>();
 					}
 				}
 			
@@ -196,10 +204,83 @@ public class MoviedbUtil {
 			}
 	}
 	
-	
-	
-	
-	
+public Star getSingleStar(String starId) throws Exception {
+		
+		Star star = new Star();
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		String nextTitle= "";
+		String fullStarName = "";
+		List<Movie> movie = new ArrayList<Movie>();
+		List<String> titleList = new ArrayList<String>();
+		List<Integer> movieIdList = new ArrayList<Integer>();
+		
+		try {
+			// get a connection
+			myConn = dataSource.getConnection();
+
+			// create sql statement
+		
+			
+			String sql =String.format("select s.id, s.dob, s.first_name, s.last_name, s.photo_url, m.id AS m_Id, m.title "
+					+ "from movies m, stars s, stars_in_movies sim "
+					+ "where sim.star_id = s.id and sim.movie_id = m.id and s.id = '%s'",starId);
+			
+			myStmt = myConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+			        ResultSet.CONCUR_READ_ONLY);
+			
+			// execute query
+			myRs = myStmt.executeQuery(sql);
+			while(myRs.next()) {
+					
+					
+					if (!myRs.isLast()) {
+					myRs.next();
+					nextTitle = myRs.getString("title");
+					myRs.previous();
+					}
+					else{
+						nextTitle = "";
+					}
+					
+
+					String title = myRs.getString("title");
+					int id = myRs.getInt("id");
+					int mId = myRs.getInt("m_Id");
+					String firstName = myRs.getString("first_name");
+					String lastName = myRs.getString("last_name");
+					String dob = myRs.getString("dob");
+					String photoUrl = myRs.getString("photo_url");
+					fullStarName = firstName + " " + lastName; 	
+					
+					if(!titleList.contains(title)) {
+						titleList.add(title);
+						Movie tempMovie = new Movie(mId, title);
+						movie.add(tempMovie);
+					}
+					
+				// create new student object
+					if(!title.equals(nextTitle)){
+//						Movie tempMovie = new Movie(id, title, director, year, fullStarName, genreList);
+						 star = new Star(id, fullStarName, dob, photoUrl, movie);
+//						 singleMovie = new Movie(124, "jlj", "asdas", 11,"9999", "901", star, genreList);
+						
+						// add it to the list of students
+						
+					}
+				}
+			
+			
+			
+			
+			return star;
+		}
+			finally {
+				// close JDBC objects
+				close(myConn, myStmt, myRs);
+			}
+	}
 	
 	private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 

@@ -29,26 +29,41 @@
 					<th> Director </th>
 					<th> Stars </th>
 					<th> Genres </th>
-					<th> Trailer </th>
 					
 				</tr>
 				
 				<tr> 
 				<!--  -->
-				<td>
-				<img src="${MOVIE.banner_url}" width="200" height="200" alt="Image Unavailable" id="moviePoster"/>
-			</td>
+					<td> <img src="${MOVIE.banner_url}" width="200" height="200" alt="Image Unavailable" id="moviePoster"/> </td>
+				
 					<td> ${MOVIE.id} </td>
 					<td> ${MOVIE.title} </td>
 					<td> ${MOVIE.year} </td>
 					<td> ${MOVIE.director} </td>
-					<td> ${MOVIE.star} </td>
-					<td> ${MOVIE.genres} </td>
 					
-					<td> ${MOVIE.trailer_url} </td>
+					<td> <c:forEach var = "stars" items = "${MOVIE.star}"> 
+								<a href = "SingleStarServlet?starId=${stars.id}">	${stars.name} <br/> </a>
+								</c:forEach>
+					 </td>
+								
+					<td> <c:forEach var = "genres" items = "${MOVIE.genres}">
+						 	 ${genres} <br/>
+						 	</c:forEach>
+				 	 </td>
+					
 					
 				</tr>
 				
+			</table>
+			<table>
+				<tr>
+					<th> Trailer </th>
+				</tr>
+				
+				<tr>
+					<td> <c:out value = "${MOVIE.trailer_url}" default = "Trailer Unavailable">  </c:out></td>
+				</tr>
+			
 			</table>
 		</div>
 	</div>

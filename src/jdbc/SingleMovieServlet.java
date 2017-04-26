@@ -44,8 +44,8 @@ public class SingleMovieServlet extends HttpServlet {
 	}
 
 	private void listSingleMovie(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String movieid = request.getParameter("movieid");
-		Movie movie = moviedbUtil.getSingleMovie(movieid);
+		String movieId = request.getParameter("movieId");
+		Movie movie = moviedbUtil.getSingleMovie(movieId);
 		
 		request.setAttribute("MOVIE", movie);
 		RequestDispatcher dispatcher =  request.getRequestDispatcher("/SingleMovie.jsp");
@@ -54,12 +54,7 @@ public class SingleMovieServlet extends HttpServlet {
 		
 		
 	}
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
 
-	
 	
 	
 }

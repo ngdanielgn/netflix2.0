@@ -9,11 +9,10 @@ public class Movie {
 	private String title;
 	private String director;
 	private int year;
-	private int starId;
 	private String banner_url;
 	private String trailer_url;
 	private List<String> genres;
-	private List<String> star;
+	private List<Star> star;
 	
 
 	public Movie() {
@@ -21,20 +20,19 @@ public class Movie {
 	}
 
 
-	public Movie(int id, String title, String director, int year, int starId, List<String> star, List<String> genres) {
+	public Movie(int id, String title, String director, int year, List<Star> star, List<String> genres) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.director = director;
 		this.year = year;
-		this.starId = starId;
 		this.star = star;
 		this.genres = genres;
 	}
 
 	
 	public Movie(int id, String title, String director, int year, String banner_url, String trailer_url,
-			List<String> genres, List<String> star) {
+			List<String> genres, List<Star> star) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -47,25 +45,14 @@ public class Movie {
 	}
 
 
-	/*
-	public Movie(int id, String title, String director, int year, String stars, String genres) {
+
+
+	public Movie(int id, String title) {
 		super();
 		this.id = id;
 		this.title = title;
-		this.director = director;
-		this.year = year;
-		this.stars = stars;
-		this.genres = genres;
 	}
-	
-	public Movie(int id, String title, String director, int year) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.director = director;
-		this.year = year;
-	}
-		*/
+
 
 	public int getId() {
 		return id;
@@ -109,11 +96,11 @@ public class Movie {
 //	public void setGenres(String genres) {
 //		this.genres = genres;
 //	}
-	public List<String> getStar() {
+	public List<Star> getStar() {
 		return star;
 	}
 
-	public void setStar(List<String> star) {
+	public void setStar(List<Star> star) {
 		this.star = star;
 	}
 	public List<String> getGenres() {
@@ -142,16 +129,6 @@ public class Movie {
 
 	public void setTrailer_url(String trailer_url) {
 		this.trailer_url = trailer_url;
-	}
-
-
-	public int getStarId() {
-		return starId;
-	}
-
-
-	public void setStarId(int starId) {
-		this.starId = starId;
 	}
 
 

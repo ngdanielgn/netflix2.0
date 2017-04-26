@@ -35,12 +35,12 @@
 				<c:forEach var = "tempMovie" items = "${MOVIE_LIST}">
 					<tr>
 						<td>${tempMovie.id} </td>
-						<td> <a href = "SingleMovieServlet?movieid=${tempMovie.id}"> ${tempMovie.title} </a> </td>
+						<td> <a href = "SingleMovieServlet?movieId=${tempMovie.id}"> ${tempMovie.title} </a> </td>
 						<td>${tempMovie.director} </td>
 						<td>${tempMovie.year} </td>
 						
 						<td>   <c:forEach var = "stars" items = "${tempMovie.star}"> 
-									${stars}
+								<a href = "SingleStarServlet?starId=${stars.id}">	${stars.name} <br/> </a>
 								</c:forEach>
 						</td>
 						<td>${tempMovie.genres} </td>
