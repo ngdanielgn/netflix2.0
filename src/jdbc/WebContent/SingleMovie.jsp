@@ -68,7 +68,12 @@
 		</div>
 	</div>
 <body>
-
+<form action="FabflixControllerServlet" method="GET">
+		Quantity <input type="text" name="quantity">
+		<button type="submit" name="command" value="addToCart">Add to Cart</button>
+	</form>
+	
+	<a href="MovieListServlet">Back</a>
 
 </body>
 </html>
