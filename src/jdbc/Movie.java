@@ -11,7 +11,7 @@ public class Movie {
 	private int year;
 	private String banner_url;
 	private String trailer_url;
-	private List<String> genres;
+	private List<Genres> genres;
 	private List<Star> star;
 	
 
@@ -19,8 +19,10 @@ public class Movie {
 		super();
 	}
 
-
-	public Movie(int id, String title, String director, int year, List<Star> star, List<String> genres) {
+	public Movie(Movie movie){
+		
+	}
+	public Movie(int id, String title, String director, int year, List<Star> star, List<Genres> genres) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -32,7 +34,7 @@ public class Movie {
 
 	
 	public Movie(int id, String title, String director, int year, String banner_url, String trailer_url,
-			List<String> genres, List<Star> star) {
+			List<Genres> genres, List<Star> star) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -103,12 +105,12 @@ public class Movie {
 	public void setStar(List<Star> star) {
 		this.star = star;
 	}
-	public List<String> getGenres() {
+	public List<Genres> getGenres() {
 		return genres;
 	}
 
 
-	public void setGenres(List<String> genres) {
+	public void setGenres(List<Genres> genres) {
 		this.genres = genres;
 	}
 	
