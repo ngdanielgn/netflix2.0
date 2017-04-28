@@ -1,6 +1,7 @@
 package jdbc;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -68,12 +69,16 @@ public class MovieListServlet extends HttpServlet {
 
 		Integer limit = null;
 		Integer page = null;
+		Integer maxPage = null;
+		int movieCounter;
 		String sort = request.getParameter("sort");
 		String order = request.getParameter("order");
 		String browseTitle = null;
 		String browseGenre = null;
 		String titleSort = null;
 		String genreName = null;
+		List<Movie> newMovieList = new ArrayList<Movie>();
+		List<Movie> movies = new ArrayList<Movie>();
 
 		
 		if(request.getParameter("genreName") !=null){
@@ -110,12 +115,37 @@ public class MovieListServlet extends HttpServlet {
 		browseTitle = (String) session.getAttribute("browseTitle");
 		browseGenre = (String) session.getAttribute("browseGenre");
 		
+		if(session.getAttribute("MOVIES") !=null){
+			
+			movies = (List<Movie>) session.getAttribute("MOVIES");
+		}
+		else{
+			movies = moviedbUtil.getMovies(sort, order, limit, page,  browseTitle, browseGenre);
+			session.setAttribute("MOVIES", movies);
+		}
+		newMovieList = new ArrayList<Movie>();
+		int offset = (page - 1) * limit;
 		
-		List<Movie> movies = moviedbUtil.getMovies(sort, order, limit, page,  browseTitle, browseGenre);
-		request.setAttribute("MOVIE_LIST", movies);
-		request.setAttribute("maxPage", (int)Math.ceil(movies.size() / limit));
+		//pagination to select n movies from movies
+		for(int i = 0; i < limit && offset < movies.size() ; i++) {
+			if (movies.get(offset) != null){
+				newMovieList.add(movies.get(offset));
+				offset++;
+			}
+		}
+		if(request.getAttribute("maxPage") != null){
+			
+		}
+		else{
+			double movieListSize = movies.size();
+			maxPage = (int) Math.ceil(movieListSize / limit);
+		}
+		
+		request.setAttribute("MOVIE_LIST", newMovieList);
+		request.setAttribute("maxPage", maxPage);System.out.println(movies.size());
 		RequestDispatcher dispatcher =  request.getRequestDispatcher("/movie-list.jsp");
 				dispatcher.forward(request, response);
+				
 	}
 
 	/**

@@ -131,7 +131,6 @@ public class MoviedbUtil {
 				if (!myRs.isLast()) {
 				myRs.next();
 				nextTitle = myRs.getString("title");
-				System.out.print(nextTitle);
 				myRs.previous();
 				}
 				else {
@@ -140,7 +139,6 @@ public class MoviedbUtil {
 				
 
 				String title = myRs.getString("title");
-				System.out.print(title);
 				int id = myRs.getInt("id");
 				int sId = myRs.getInt("s_Id");
 				int year = myRs.getInt("year");
@@ -178,15 +176,15 @@ public class MoviedbUtil {
 					genres = new ArrayList<Genres>();
 				}
 			}
+////			This commented out part moved to MovieListServlet.
+//			List<Movie> newMovieList = new ArrayList<Movie>();
+//			int offset = (page - 1) * limit;
+//			for(int i = 0; i < limit && i < movies.size(); i++) {
+//				newMovieList.add(movies.get(offset));
+//				offset++;
+//			}
 			
-			List<Movie> newMovieList = new ArrayList<Movie>();
-			int offset = (page - 1) * limit;
-			for(int i = 0; i < limit && i < movies.size(); i++) {
-				newMovieList.add(movies.get(offset));
-				offset++;
-			}
-			
-			return newMovieList;		
+			return movies;		
 		}
 		finally {
 			// close JDBC objects
@@ -232,7 +230,6 @@ public class MoviedbUtil {
 					if (!myRs.isLast()) {
 					myRs.next();
 					nextTitle = myRs.getString("title");
-					System.out.print(nextTitle);
 					myRs.previous();
 					}
 					else{

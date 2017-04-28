@@ -52,8 +52,9 @@
 					<th> Year </th>
 					<th> Stars </th>
 					<th> Genres </th>
+					<th> </th>
 					
-				</tr>
+				</tr> 
 				<c:forEach var = "tempMovie" items = "${MOVIE_LIST}">
 					<tr>
 						<td>${tempMovie.id} </td>
@@ -68,7 +69,15 @@
 						<td> <c:forEach var = "genres" items = "${tempMovie.genres}"> 
 								${genres.name} <br/>
 								</c:forEach>
-						 </td>
+						</td>
+						
+						<td> 
+							<form action="FabflixControllerServlet" method="GET">
+							<button type="submit" name="command" value="${tempMovie.id}">Add to Cart</button>
+							</form>
+						</td>
+						 
+						 <td> 
 					</tr>
 				
 				
@@ -83,11 +92,10 @@
 			<button>Previous</button>
 		</a>
 	</c:if>
-
+<c:if test="${page lt maxPage}">
 		<a href="MovieListServlet?page=${page + 1}">
 			<button>Next</button>
 		</a>
-
-
+</c:if>
 </body>
 </html>
