@@ -27,6 +27,7 @@ public class MoviedbUtil {
 		ResultSet myRs = null;
 		String nextTitle= "";
 		String fullStarName = "";
+		int starId;
 		String sql = "";
 		List<Genres> genres = new ArrayList<Genres>();
 		List<Star> star = new ArrayList<Star>();
@@ -149,8 +150,9 @@ public class MoviedbUtil {
 				String firstName = myRs.getString("first_name");
 				String lastName = myRs.getString("last_name");
 				fullStarName = firstName + " " + lastName;
+				
 				if(!tempStarId.contains(sId)) {
-					Star tempStar = new Star(sId, fullStarName);
+					Star tempStar = new Star(sId, firstName, lastName);
 					star.add(tempStar);
 					tempStarId.add(sId);
 				}
@@ -253,7 +255,7 @@ public class MoviedbUtil {
 					
 					fullStarName = firstName + " " + lastName;
 					if(!tempStarId.contains(sId)) {
-						Star tempStar = new Star(sId, fullStarName);
+						Star tempStar = new Star(sId, firstName, lastName);
 						star.add(tempStar);
 						tempStarId.add(sId);
 						
@@ -353,7 +355,7 @@ public Star getSingleStar(String starId) throws Exception {
 				// create new student object
 					if(!title.equals(nextTitle)){
 //						Movie tempMovie = new Movie(id, title, director, year, fullStarName, genreList);
-						 star = new Star(id, fullStarName, dob, photoUrl, movie);
+						 star = new Star(id, firstName, lastName, dob, photoUrl, movie);
 //						 singleMovie = new Movie(124, "jlj", "asdas", 11,"9999", "901", star, genreList);
 						
 						// add it to the list of students

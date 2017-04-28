@@ -4,7 +4,8 @@ import java.util.List;
 
 public class Star {
 	private int id;
-	private String name;
+	private String firstName;
+	private String lastName;
 	private String dob;
 	private String photoUrl;
 	private List<Movie> movie;
@@ -16,22 +17,43 @@ public class Star {
 		super();
 	}
 
-	public Star(int id, String name, String dob, String photoUrl, List<Movie> movie) {
+	public Star(int id, String firstName, String lastName, String dob, String photoUrl, List<Movie> movie) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.dob = dob;
 		this.photoUrl = photoUrl;
 		this.movie = movie;
 	}
+	
+	
 
 
-
-	public Star(int id, String name) {
+	public Star(int id, String firstName, String lastName) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	
 
 
 	public int getId() {
@@ -40,14 +62,6 @@ public class Star {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getDob() {
