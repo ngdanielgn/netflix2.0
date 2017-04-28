@@ -100,4 +100,11 @@
 		</a>
 </c:if>
 </body>
+<br/>
+<br/>
+<form action= Browse.jsp method= "GET">		
+	
+		<input type = "submit" value = "Back to Browse" />
+</form>
+
 </html>

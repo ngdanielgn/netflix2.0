@@ -18,7 +18,7 @@ public class Star {
 	}
 
 	public Star(int id, String firstName, String lastName, 
-			String dob, String photoUrl, List<Movie> movie) {
+			String dob, String photoUrl, List<Movie> movies) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -94,7 +94,7 @@ public class Star {
 		return movies;
 	}
 
-	public void setMovie(List<Movie> movie) {
+	public void setMovie(List<Movie> movies) {
 		this.movies = movies;
 	}
 

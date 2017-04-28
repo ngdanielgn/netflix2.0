@@ -120,21 +120,26 @@ public class MovieListServlet extends HttpServlet {
 		browseTitle = (String) session.getAttribute("browseTitle");
 		browseGenre = (String) session.getAttribute("browseGenre");
 		
-		if(session.getAttribute("MOVIES") !=null || request.getAttribute("titleSort") !=  null||
-				request.getAttribute("genreName") !=null){
-			
+		
+		
+		
+		// If browsed by title or genre create a new sql query otherwise
+		// get movie list from session
+		if(titleSort!=  null || genreName !=null) {
+			movies = moviedbUtil.getMovies(sort, order, limit, page,  browseTitle, browseGenre);
+			session.setAttribute("MOVIES", movies);
+		}
+		
+		else if(session.getAttribute("MOVIES") !=null)
+		{
 			movies = (List<Movie>) session.getAttribute("MOVIES");
 		}
-		else if (request.getAttribute("titleSort") !=  null||
-				request.getAttribute("genreName") !=null) {
 		
+		else {
 			movies = moviedbUtil.getMovies(sort, order, limit, page,  browseTitle, browseGenre);
 			session.setAttribute("MOVIES", movies);
 		}
-		else{
-			movies = moviedbUtil.getMovies(sort, order, limit, page,  browseTitle, browseGenre);
-			session.setAttribute("MOVIES", movies);
-		}
+//		
 		
 		
 		if(request.getAttribute("maxPage") != null){
