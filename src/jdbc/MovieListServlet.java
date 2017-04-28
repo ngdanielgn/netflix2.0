@@ -75,7 +75,6 @@ public class MovieListServlet extends HttpServlet {
 		Integer maxPage = null;
 		String sort = null;
 		String order = null;
-		System.out.println("BEGINNING :" + sort + order);
 		String browseTitle = null;
 		String browseGenre = null;
 		String titleSort = null;
@@ -147,71 +146,62 @@ public class MovieListServlet extends HttpServlet {
 		}
 		
 		
-		if (session.getAttribute("sort") != null && session.getAttribute("order") !=null){
-			sort = (String) session.getAttribute("sort");
-			order = (String) session.getAttribute("order");
-		}
-		else if(request.getParameter("sort")!= null && request.getParameter("order") !=null){
+		
+		if(request.getParameter("sort")!= null && request.getParameter("order") !=null){
 		
 			sort = request.getParameter("sort");
 			order = request.getParameter("order");
 			session.setAttribute("sort", sort);
 			session.setAttribute("order", order);
 		}
-
-		Comparator<Movie> COMPARATOR = new Comparator<Movie>()
-	    {
-			
-	    // This is where the sorting happens.
-			
-	        public int compare(Movie o1, Movie o2)
-	        {	
-	        	
-	        	//Sorts by Year ASC, if 2 movies the same year sort by title
-	        	if (sort!=null && order!=null ){
-	        		System.out.println("TESTING COMAPRE");
-		            if (sort.equals("year") && order.equals("ASC")) {
-		            	int yearDifference = o1.getYear() - o2.getYear();
-		            	if (yearDifference == 0){
-		            		
-		            		System.out.println("TESTING YEAR TIE");
-		            		return o1.getTitle().compareTo(o2.getTitle()); 
-		            	}
-		            	else
-		            	{System.out.println("TESTING YEAR ASC");
-		            		return yearDifference;
-		            	}
-		            }		
-		          //Sorts by Year DESC, if 2 movies the same year sort by title
-		            if (sort.equals("year") && order.equals("DESC")){
-		            	int yearDifference = o2.getYear() - o1.getYear();
-		            	if (yearDifference == 0)
-		            		return o1.getTitle().compareTo(o2.getTitle());
-		            	else
-		            		return yearDifference;
-		            }
-		            //Sorts by Title ASC .....
-		            if (sort.equals("title") && order.equals("ASC")){
-		            	if (!o1.getTitle().equals(o2.getTitle())) {
-		            		return o1.getTitle().compareTo(o2.getTitle());
-		            	}
-		            	else return o1.getYear() - o2.getYear();
-		            }
-		            
-		            //Sorts by Title DESC....
-		            if (sort.equals("title") && order.equals("DESC")){
-		            	if (!o2.getTitle().equals(o1.getTitle())) {
-		            		return o2.getTitle().compareTo(o1.getTitle());
-		            	}
-		            	else return o1.getYear() - o2.getYear();
-		            }
-	        	}
-	            //Return Title ASC by default
-	            return o1.getTitle().compareTo(o2.getTitle());
-        	}
-	    };
-	    //Sorts by title/year if option chosen
-	    	Collections.sort(movies, COMPARATOR);
+		else if (session.getAttribute("sort") != null && session.getAttribute("order") !=null){
+			sort = (String) session.getAttribute("sort");
+			order = (String) session.getAttribute("order");
+		}
+		
+		
+	    if (sort!=null && order!=null ){
+            if (sort.equals("year") && order.equals("ASC")) {
+            	Collections.sort(movies, new Comparator<Movie>() {
+            		@Override public int compare(Movie o1, Movie o2) {
+	            return o1.getYear() - o2.getYear(); // Ascending
+	        }
+	        
+            	});	
+            }
+            
+            else if (sort.equals("year") && order.equals("DESC")) {
+            	Collections.sort(movies, new Comparator<Movie>() {
+            		@Override public int compare(Movie o1, Movie o2) {
+	            return o2.getYear() - o1.getYear(); // Ascending
+	        }
+	        
+            	});	
+            }
+            
+            else if (sort.equals("title") && order.equals("ASC")) {
+            	Collections.sort(movies, new Comparator<Movie>() {
+            		@Override public int compare(Movie o1, Movie o2) {
+	            return o1.getTitle().compareTo(o2.getTitle());// Ascending
+	        }
+	        
+            	});	
+            }
+            
+            else if (sort.equals("title") && order.equals("DESC")) {
+            	Collections.sort(movies, new Comparator<Movie>() {
+            		@Override public int compare(Movie o1, Movie o2) {
+	            return o2.getTitle().compareTo(o1.getTitle());// Ascending
+	        }
+	        
+            	});	
+            }
+	    }
+            	
+	    	
+	   
+		
+	    	
 		
 	    
 	    newMovieList = new ArrayList<Movie>();
@@ -225,7 +215,7 @@ public class MovieListServlet extends HttpServlet {
 			}
 		}
 		request.setAttribute("MOVIE_LIST", newMovieList);
-		request.setAttribute("maxPage", maxPage);System.out.println(movies.size());
+		request.setAttribute("maxPage", maxPage);
 		RequestDispatcher dispatcher =  request.getRequestDispatcher("/movie-list.jsp");
 				dispatcher.forward(request, response);
 				
