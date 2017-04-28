@@ -42,12 +42,12 @@
 					<td> ${MOVIE.director} </td>
 					
 					<td> <c:forEach var = "stars" items = "${MOVIE.star}"> 
-								<a href = "SingleStarServlet?starId=${stars.id}">	${stars.name} <br/> </a>
+								<a href = "SingleStarServlet?starId=${stars.id}">	${stars.firstName} ${stars.lastName} <br/> </a>
 								</c:forEach>
 					 </td>
 								
 					<td> <c:forEach var = "genres" items = "${MOVIE.genres}">
-						 	 ${genres} <br/>
+						 	<a href = "MovieListServlet?genreName=${genres.name}"> ${genres.name} <br/> </a>
 						 	</c:forEach>
 				 	 </td>
 					
@@ -68,7 +68,12 @@
 		</div>
 	</div>
 <body>
-
+<form action="FabflixControllerServlet" method="GET">
+		Quantity <input type="text" name="quantity">
+		<button type="submit" name="command" value="addToCart">Add to Cart</button>
+	</form>
+	
+	<a href="MovieListServlet">Back</a>
 
 </body>
 </html>

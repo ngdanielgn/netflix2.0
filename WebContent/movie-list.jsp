@@ -17,6 +17,28 @@
 			<h2>Movie List</h2>
 		</div>
 	</div>
+<body>
+<form action= MovieListServlet method= "GET">
+	Sort by: <select name="sort">
+				<option value = "Title"> Title </option>
+				<option value = "Year"> Year </option>
+			</select>
+			
+			<select name="order">
+				<option value  = "ASC"> Ascending </option>
+				<option value = "DESC"> Descending </option>
+			</select>
+			<br/>
+	Results per page: <select name="limit">
+				<option value = 10> 10 </option>
+				<option value = 25> 25 </option>
+				<option value = 50> 50 </option>
+				<option value = 100> 100 </option>
+			</select>
+		<input type = "submit" value = "Sort" />
+	</form>
+
+
 
 	<div id="container">
 		<div id="content">
@@ -26,8 +48,8 @@
 				
 					<th> Id </th>
 					<th> Title </th>
-					<th> Year </th>
 					<th> Director </th>
+					<th> Year </th>
 					<th> Stars </th>
 					<th> Genres </th>
 					
@@ -40,10 +62,13 @@
 						<td>${tempMovie.year} </td>
 						
 						<td>   <c:forEach var = "stars" items = "${tempMovie.star}"> 
-								<a href = "SingleStarServlet?starId=${stars.id}">	${stars.name} <br/> </a>
+								<a href = "SingleStarServlet?starId=${stars.id}">	${stars.firstName} ${stars.lastName} <br/> </a>
 								</c:forEach>
 						</td>
-						<td>${tempMovie.genres} </td>
+						<td> <c:forEach var = "genres" items = "${tempMovie.genres}"> 
+								${genres.name} <br/>
+								</c:forEach>
+						 </td>
 					</tr>
 				
 				
@@ -52,7 +77,16 @@
 			</table>
 		</div>
 	</div>
-<body>
+
+<c:if test="${page ne 1}">
+		<a href="MovieListServlet?page=${page - 1}">
+			<button>Previous</button>
+		</a>
+	</c:if>
+
+		<a href="MovieListServlet?page=${page + 1}">
+			<button>Next</button>
+		</a>
 
 
 </body>

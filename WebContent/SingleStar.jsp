@@ -35,7 +35,7 @@
 				<td><img src="${STAR.photoUrl}" width="200" height="200" alt="Image Unavailable" id="moviePoster"/>
 			</td>
 					<td> ${STAR.id} </td>
-					<td> ${STAR.name} </td>
+					<td> ${STAR.firstName} ${stars.lastName} </td>
 					<td> ${STAR.dob} </td>
 					<td> <c:forEach var = "movies" items = "${STAR.movie}"> 
 						 <a href = "SingleMovieServlet?movieId=${movies.id}">	${movies.title} <br/> </a>
