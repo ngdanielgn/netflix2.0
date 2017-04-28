@@ -29,7 +29,7 @@ public class MoviedbUtil {
 		String fullStarName = "";
 		int starId;
 		String sql = "";
-		List<Genres> genres = new ArrayList<Genres>();
+		List<Genre> genres = new ArrayList<Genre>();
 		List<Star> star = new ArrayList<Star>();
 		List<Integer> tempStarId = new ArrayList<Integer>();
 		List<String> genreList = new ArrayList<String>();
@@ -82,34 +82,34 @@ public class MoviedbUtil {
 			
 			
 			
-			if (sort!=null && order!=null) {
-				if (sort.equals("Year")) {
-					sql = sql.concat(" order by m.year");
-				}
-			
-				
-				if (sort.equals("Title")) {
-					sql = sql.concat(" order by m.title");
-				}
-				
-				if (order.equals("ASC")) {
-					sql = sql.concat(" ASC");
-				}
-				
-				if (order.equals("DESC")) {
-					sql = sql.concat(" DESC");
-				}
-				
-			}
-			else {
-				sql = sql.concat(" order by m.title ASC");
-			}
-			
-			if(limit!=null) {
-			}
-			else {
-				sql = sql.concat(" limit 10");
-			}
+//			if (sort!=null && order!=null) {
+//				if (sort.equals("Year")) {
+//					sql = sql.concat(" order by m.year");
+//				}
+//			
+//				
+//				if (sort.equals("Title")) {
+//					sql = sql.concat(" order by m.title");
+//				}
+//				
+//				if (order.equals("ASC")) {
+//					sql = sql.concat(" ASC");
+//				}
+//				
+//				if (order.equals("DESC")) {
+//					sql = sql.concat(" DESC");
+//				}
+//				
+//			}
+//			else {
+//				sql = sql.concat(" order by m.title ASC");
+//			}
+//			
+//			if(limit!=null) {
+//			}
+//			else {
+//				sql = sql.concat(" limit 10");
+//			}
 			// create sql statement
 //			String sql = "select m.id, m.title, m.year, m.director, s.first_name,"
 //					+ "s.last_name, s.id AS s_Id, g.name, g.id AS gID from movies m, genres_in_movies gim, stars s,"
@@ -157,7 +157,7 @@ public class MoviedbUtil {
 				
 				if (!genreList.contains(genreName)) {
 					genreList.add(genreName);
-					Genres tempGenres = new Genres(genreId,genreName);
+					Genre tempGenres = new Genre(genreId,genreName);
 					genres.add(tempGenres);
 				}
 					
@@ -165,7 +165,7 @@ public class MoviedbUtil {
 			// create new student object
 				if(!title.equals(nextTitle)){
 //					Movie tempMovie = new Movie(id, title, director, year, fullStarName, genreList);
-					Movie tempMovie = new Movie(id, title, director, year, star, genres);
+					Movie tempMovie = new Movie(id, title, director, year, genres, star);
 					
 					// add it to the list of students
 					movies.add(tempMovie);	
@@ -173,7 +173,7 @@ public class MoviedbUtil {
 					tempStarId = new ArrayList<Integer>();
 					genreList = new ArrayList<String>();
 					star = new ArrayList<Star>();
-					genres = new ArrayList<Genres>();
+					genres = new ArrayList<Genre>();
 				}
 			}
 ////			This commented out part moved to MovieListServlet.
@@ -201,7 +201,7 @@ public class MoviedbUtil {
 		String nextTitle= "";
 		String fullStarName = "";
 
-		List<Genres> genres = new ArrayList<Genres>();
+		List<Genre> genres = new ArrayList<Genre>();
 		List<Star> star = new ArrayList<Star>();
 		List<Integer> tempStarId = new ArrayList<Integer>();
 		List<String> genreList = new ArrayList<String>();
@@ -260,7 +260,7 @@ public class MoviedbUtil {
 					
 					if (!genreList.contains(genreName)) {
 						genreList.add(genreName);
-						Genres tempGenres = new Genres(genreId,genreName);
+						Genre tempGenres = new Genre(genreId,genreName);
 						genres.add(tempGenres);
 					}
 						
@@ -274,7 +274,7 @@ public class MoviedbUtil {
 						// add it to the list of students
 						fullStarName  = "";
 						star = new ArrayList<Star>();
-						genres = new ArrayList<Genres>();
+						genres = new ArrayList<Genre>();
 						genreList = new ArrayList<String>();
 						tempStarId = new ArrayList<Integer>();
 					}
@@ -300,7 +300,7 @@ public Star getSingleStar(String starId) throws Exception {
 		String nextTitle= "";
 		String fullStarName = "";
 
-		List<Genres> genres = new ArrayList<Genres>();
+		List<Genre> genres = new ArrayList<Genre>();
 		List<Movie> movie = new ArrayList<Movie>();
 		List<String> titleList = new ArrayList<String>();
 		List<Integer> movieIdList = new ArrayList<Integer>();

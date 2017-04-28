@@ -20,15 +20,18 @@
 <body>
 <form action= MovieListServlet method= "GET">
 	Sort by: <select name="sort">
-				<option value = "Title"> Title </option>
-				<option value = "Year"> Year </option>
+				<option value = "title"> Title </option>
+				<option value = "year"> Year </option>
 			</select>
 			
 			<select name="order">
 				<option value  = "ASC"> Ascending </option>
 				<option value = "DESC"> Descending </option>
 			</select>
+			<input type = "submit" value = "Sort" />
+</form>
 			<br/>
+<form action= MovieListServlet method= "GET">		
 	Results per page: <select name="limit">
 				<option value = 10> 10 </option>
 				<option value = 25> 25 </option>
@@ -36,8 +39,7 @@
 				<option value = 100> 100 </option>
 			</select>
 		<input type = "submit" value = "Sort" />
-	</form>
-
+</form>
 
 
 	<div id="container">

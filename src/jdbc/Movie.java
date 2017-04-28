@@ -11,8 +11,9 @@ public class Movie {
 	private int year;
 	private String banner_url;
 	private String trailer_url;
-	private List<Genres> genres;
-	private List<Star> star;
+	private List<Genre> genres;
+	private List<Star> stars;
+	private int quantity = 0;
 	
 
 	public Movie() {
@@ -22,19 +23,20 @@ public class Movie {
 	public Movie(Movie movie){
 		
 	}
-	public Movie(int id, String title, String director, int year, List<Star> star, List<Genres> genres) {
+	public Movie(int id, String title, String director, int year, 
+			List<Genre> genres,List<Star> stars) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.director = director;
 		this.year = year;
-		this.star = star;
+		this.stars = stars;
 		this.genres = genres;
 	}
 
 	
 	public Movie(int id, String title, String director, int year, String banner_url, String trailer_url,
-			List<Genres> genres, List<Star> star) {
+			List<Genre> genres, List<Star> stars) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -43,7 +45,7 @@ public class Movie {
 		this.banner_url = banner_url;
 		this.trailer_url = trailer_url;
 		this.genres = genres;
-		this.star = star;
+		this.stars = stars;
 	}
 
 
@@ -99,18 +101,18 @@ public class Movie {
 //		this.genres = genres;
 //	}
 	public List<Star> getStar() {
-		return star;
+		return stars;
 	}
 
 	public void setStar(List<Star> star) {
-		this.star = star;
+		this.stars = star;
 	}
-	public List<Genres> getGenres() {
+	public List<Genre> getGenres() {
 		return genres;
 	}
 
 
-	public void setGenres(List<Genres> genres) {
+	public void setGenres(List<Genre> genres) {
 		this.genres = genres;
 	}
 	
@@ -133,6 +135,13 @@ public class Movie {
 		this.trailer_url = trailer_url;
 	}
 
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
 	@Override
 	public String toString() {

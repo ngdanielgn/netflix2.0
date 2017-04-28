@@ -8,7 +8,7 @@ public class Star {
 	private String lastName;
 	private String dob;
 	private String photoUrl;
-	private List<Movie> movie;
+	private List<Movie> movies;
 	
 	
 	
@@ -17,16 +17,27 @@ public class Star {
 		super();
 	}
 
-	public Star(int id, String firstName, String lastName, String dob, String photoUrl, List<Movie> movie) {
+	public Star(int id, String firstName, String lastName, 
+			String dob, String photoUrl, List<Movie> movie) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dob = dob;
 		this.photoUrl = photoUrl;
-		this.movie = movie;
+		this.movies = movies;
 	}
-	
+	public Star(int id, String firstName, String lastName, 
+			String dob, String photoUrl) {
+
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dob = dob;
+		this.photoUrl = photoUrl;
+
+	}
+
 	
 
 
@@ -80,11 +91,11 @@ public class Star {
 		this.photoUrl = photoUrl;
 	}
 	public List<Movie> getMovie() {
-		return movie;
+		return movies;
 	}
 
 	public void setMovie(List<Movie> movie) {
-		this.movie = movie;
+		this.movies = movies;
 	}
 
 	
