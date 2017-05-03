@@ -47,23 +47,54 @@
 	          </ul>
 	        </div>
 	      </div>
-	
-	      <div class="inner cover center-wrapper">
-	        <h1 class="cover-heading">Welcome Back</h1>
-	
-	        <p class="lead"> ${CUSTOMER.firstName} </p>
-	
-	        <p class="lead"><a class="btn btn-lg btn-info" href="search-view.jsp">Search Now</a></p>
-	      </div>
-	
-	      <div class="mastfoot">
-	        <div class="inner">
-	          <!-- Validation -->
-	
-	
-	          <p>© 2017 CINEPHIM, LLC </p>
-	        </div>
-	      </div>
+
+
+		<div class="row cover-container options-padding">
+
+
+			<h3>Review Order</h3>
+			<table class="table table-responsive table-background text-color">
+				<c:forEach var="movie" items="${SHOPPING_CART}">
+					
+						<tr>
+							<th><p align="center">Movie ID</p></th>
+							<th><p align="center">Title</p></th>
+							<th><p align="center">Quantity</p></th>
+						</tr>
+																				
+						<tr>
+							<td> ${movie.id} </td>
+							<td> ${movie.title} </td>
+							<td> ${movie.quantity} </td>	
+						</tr>
+						
+				</c:forEach>
+			</table>
+			
+			
+			<h3>Order History</h3>
+			<table class="table table-responsive table-background text-color">
+				<c:forEach var="trans" items="${BOUGHT_BY_CUSTOMER}">
+					
+						<tr>
+							<th><p align="center">Transaction ID</p></th>
+							<th><p align="center">Customer ID</p></th>
+							<th><p align="center">Movie ID</p></th>
+							<th><p align="center">Sale Date</p></th>
+						</tr>
+																				
+						<tr>
+							<td> ${trans.id} </td>
+							<td> ${trans.customerId} </td>
+							<td> ${trans.movieId} </td>
+							<td> ${trans.saleDate} </td>			
+						</tr>
+							
+				</c:forEach>
+			</table>
+			
+		</div>
+
 	    </div>
 	</div>
 	</div>
