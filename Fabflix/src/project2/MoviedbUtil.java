@@ -14,8 +14,7 @@ public class MoviedbUtil {
 		dataSource = theDataSource;	
 	}
 	
-	public List<Movie> getMovies(String sort, String order, Integer limit, int page,
-			String browseTitle, String browseGenre) throws Exception {
+	public List<Movie> getMovies(String browseTitle, String browseGenre) throws Exception {
 		
 		
 		List<Movie> movies = new ArrayList<>();
