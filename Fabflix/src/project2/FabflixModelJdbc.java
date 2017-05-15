@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
+  
 
 public class FabflixModelJdbc {
 	
@@ -461,6 +462,40 @@ public class FabflixModelJdbc {
 		
 		return customer;
 	}
+	
+	public Employee employeeLogin(String email, String password) throws Exception {
+		/* Implemented login function that returns a Customer object. */
+		
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet result = null;
+		Employee employee = null;
+		
+		if (email == null || password == null)
+			return null;
+		
+		try {
+			String query = String.format("SELECT * "
+										+ "FROM employees e "
+										+ "WHERE e.email = '%s' AND e.password = '%s'", 
+										email, password);
+			
+			connection = dataSource.getConnection();
+			statement = connection.createStatement();
+			result = statement.executeQuery(query);
+			
+			if (result.next()) {
+				employee = new Employee(result.getString("email"), 
+										result.getString("password"),
+										result.getString("fullname"));
+			}
+			
+		} finally {
+			close(connection, statement, result);
+		}
+		
+		return employee;
+	}
 
 	public int addSale(int customerId, int movieId, String currentDate) throws Exception {
 		/* 
@@ -487,6 +522,87 @@ public class FabflixModelJdbc {
 		}
 		
 		return newRecords;
+	}
+	
+	public void addStar(String firstName, String lastName, String dob, String photoUrl) throws SQLException{
+		/*Adds a star to the database*/
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet result = null;
+		String query = null;
+		
+		
+		try {
+			if (dob.equals("") && photoUrl.equals("")) {
+				 query = String.format("INSERT INTO stars VALUES(0, '%s', '%s', null, null)", 
+											firstName,lastName);
+			}
+			else if(dob.equals("")){
+				 query = String.format("INSERT INTO stars VALUES(0, '%s', '%s', null, '%s')", 
+						firstName,lastName, photoUrl);
+			}
+			
+			else if(photoUrl.equals("")) {
+				query = String.format("INSERT INTO stars VALUES(0, '%s', '%s', '%s', null)", 
+						firstName,lastName,dob);
+			}
+			else {
+				query = String.format("INSERT INTO stars VALUES(0, '%s', '%s', '%s', '%s')", 
+						firstName,lastName,dob, photoUrl);
+			}
+				
+			connection = dataSource.getConnection();
+			statement = connection.createStatement();
+			statement.executeUpdate(query);
+			
+		} finally {
+			close(connection, statement, result);
+		}
+		
+	}
+	
+	public List<String> getMetadata() throws Exception {		
+		/* Provide the metadata of the database; 
+		 * in particular, print out the name of each table and, 
+		 * for each table, each attribute and its type. */
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet result = null;
+		String tableMeta = null;
+		String format = null;
+		List<String> metaDataList = new ArrayList<>();
+		String[] TABLES = {
+				"movies", "stars","employees", "stars_in_movies",
+				"genres", "genres_in_movies", "customers",
+				"sales", "creditcards"
+				};
+//		List<String>[] meta = {movies};
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			DatabaseMetaData metadata = connection.getMetaData();
+			
+			for (int i = 0; i < TABLES.length; ++i) {
+				ResultSet columns = metadata.getColumns(null, null, TABLES[i], "%");
+				format = "";
+				format = format.concat(TABLES[i] + "-- " + '\n');
+				while (columns.next()) {
+					 tableMeta = columns.getString(4) + ": " 
+										+ columns.getString(6) + "    ";
+					 format = format.concat(tableMeta + " " + "||" + '\t');
+					 format = format.concat(" ");
+						// column name : mySQL data type
+				}
+				
+				metaDataList.add(format);
+			}
+			return metaDataList;
+		}
+		finally {
+			close(connection, statement, result);
+		}
+
 	}
 	
 	public List<Sale> getSales(int customerId) throws Exception {
@@ -521,6 +637,35 @@ public class FabflixModelJdbc {
 			close(connection, statement, result);
 		}
 		
+	}
+	
+	public int addMovie(String title, int year, String director, String starFirstName,
+							String starLastName, String genre) throws Exception {
+		/*Adds a movie to the database*/
+		
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet result = null;
+		
+		int movieAddorUpdateCheck = 0;
+		try{
+			String query = String.format("Call add_movie('%s', %d, '%s', '%s', '%s', '%s');",
+										title, year, director, starFirstName, starLastName, genre);
+			
+
+			connection = dataSource.getConnection();
+			statement = connection.createStatement();
+			result = statement.executeQuery(query);
+			
+			while(result.next()) {
+				movieAddorUpdateCheck = result.getInt("answer");
+			}
+			
+			return movieAddorUpdateCheck;
+		}
+		finally {
+			close(connection, statement, result);
+		}
 	}
 	
 

@@ -83,63 +83,22 @@
 			
 			<div class="row cover-container text-color">
 				<table class="table table-responsive table-background">
-			        <thead>
-			            <tr>
-			                <th><p align="center">ID</p></th>
-			                <th><p align="center">Title</p></th>
-			                <th><p align="center">Director</p></th>
-			                <th><p align="center">Year</p></th>
-			                <th><p align="center">Stars</p></th>
-			                <th><p align="center">Genres</p></th>
-			                <th></th>
-			            </tr>
-			        </thead>
+			         <thead>
+	                </thead>
+		                
 			        <tbody>
-			        
-			        	<c:forEach var = "tempMovie" items = "${MOVIES_PER_PAGE}">
-				            <tr>
-				                <td>${tempMovie.id}</td>
-				                <td><a class="text-color" href = "SingleMovieServlet?movieId=${tempMovie.id}"> ${tempMovie.title} </a> </td>
-				                <td>${tempMovie.director}</td>
-				                <td>${tempMovie.year}</td>
-				                <td>
-									<c:forEach var = "stars" items = "${tempMovie.stars}"> 
-										<a class="text-color" href = "SingleStarServlet?starId=${stars.id}"> ${stars.firstName} ${stars.lastName} <br/> </a>
-									</c:forEach>			                
-				                </td>
-				                <td>
-									<c:forEach var = "genres" items = "${tempMovie.genres}"> 
-										${genres.name} <br/>
-									</c:forEach>			                
-				                </td>
-				                
-								<td> 
-									<form action="FabflixControllerServlet" method="GET">
-										<input type="hidden" name="movieId" value="${tempMovie.id}">
-										<button class="btn button btn-success btn-sm" type="submit" name="command" value="addToCart">Add to Cart</button>
-									</form>
-								</td>			                
-				            </tr>
-			            </c:forEach>
+			        <td>
+				        <c:forEach var = "METADATA"  items = "${METADATA}">
+							<c:out value = "${METADATA}" ></c:out> <br/> <br/>
+						
+						</c:forEach>
+		        	</td>
 			        </tbody>
 			    </table>
 			</div>
 			
 
-			<div class="inner">
-				<c:if test="${page ne 1}">
-						<a href="MovieListServlet?page=${page - 1}">
-							<button class="btn button btn-success btn-sm">Previous</button>
-						</a>
-				</c:if>
-				
-				<c:if test="${page lt maxPage}">
-						<a href="MovieListServlet?page=${page + 1}">
-							<button class="btn button btn-success btn-sm" >Next</button>
-						</a>
-				</c:if>
-			</div>		
-
+		
 		</div>
 
 	    </div>

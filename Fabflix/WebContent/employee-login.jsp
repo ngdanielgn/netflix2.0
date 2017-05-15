@@ -11,7 +11,6 @@
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script> 
 	<script src="login.js"></script>
-	<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body>
@@ -27,11 +26,11 @@
 	                </div>
 	            </div>
 	            <div class="wrap">
-	                <p class="form-title">cinephim</p>
+	                <p class="form-title">cinephim dashboard</p>
 	                <form class="login" action="FabflixControllerServlet" method="POST">		<!-- SERVLET -->
 	                <input type="text" placeholder="Email" name="email"/>		<!-- EMAIL -->
 	                <input type="password" placeholder="Password" name="password"/>		<!-- PASSWORD -->
-	                <input type="submit" class="btn btn-success btn-sm" name="command" value="login">		<!-- LOGIN -->
+	                <input type="submit" class="btn btn-success btn-sm" name="command" value="employeeLogin">		<!-- LOGIN -->
 	                
 	                <div class="remember-forgot">
 	                    <div class="row">
@@ -56,7 +55,6 @@
 	                        </div>
 	                    </div>
 	                </div>
-	               <div class="g-recaptcha" data-sitekey="6LfPZSAUAAAAAJqqhAE7sAxtF9x7z5UAYwEwVdCu"></div>
 	                </form>
 	                
 

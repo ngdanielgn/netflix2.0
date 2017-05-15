@@ -31,6 +31,7 @@ public class FabflixControllerServlet extends HttpServlet {
 	private List<Movie> movies;
 	private List<Movie> shoppingCart;
 	private Customer customer;
+	private Employee employee;
 	private HttpSession session;
 	
 	@Override
@@ -43,6 +44,7 @@ public class FabflixControllerServlet extends HttpServlet {
 			this.shoppingCart = new ArrayList<Movie>();
 			this.customer = null;
 			this.session = null;
+			this.employee = null;
 
 		} catch (Exception e) {
 			throw new ServletException(e);
@@ -82,6 +84,31 @@ public class FabflixControllerServlet extends HttpServlet {
 			RequestDispatcher dispatcher =  request.getRequestDispatcher("login.jsp");
 			dispatcher.forward(request, response);	
 		}
+		
+	}
+	
+	private void employeeLogin(HttpServletRequest request, 
+					HttpServletResponse response) throws Exception {
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		this.employee = database.employeeLogin(email, password);
+		
+		if(this.employee != null)
+		{
+			//maintain session id and store it somewhere
+			//replace validation.jsp to the next real state (main page)
+			session.setAttribute("EMPLOYEE", this.employee);
+			
+			RequestDispatcher dispatcher =  request.getRequestDispatcher("_dashboard.jsp");
+			dispatcher.forward(request, response);
+		}
+		else
+		{
+			request.setAttribute("FAIL", true);
+			RequestDispatcher dispatcher =  request.getRequestDispatcher("employee-login.jsp");
+			dispatcher.forward(request, response);	
+		}
+		
 		
 	}
 	
@@ -309,6 +336,75 @@ public class FabflixControllerServlet extends HttpServlet {
 		
 	}
 	
+	private void addStar(HttpServletRequest request, 
+				HttpServletResponse response) throws Exception {
+		/* Adds Star to database, requires star's last name*/
+		String firstName = null;
+		String lastName = null;
+		if(request.getParameter("lastName") != "") {
+			firstName = request.getParameter("firstName");
+			lastName = request.getParameter("lastName");
+			
+			String dob = request.getParameter("dob");
+			String photoUrl = request.getParameter("photoUrl");
+			
+			
+			database.addStar(firstName, lastName, dob, photoUrl);
+			request.setAttribute("SUCCESS", true);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("_dashboard-add-star.jsp");
+			dispatcher.forward(request, response);
+		}
+		else
+		{
+			
+			request.setAttribute("FAIL", true);
+			RequestDispatcher dispatcher =  request.getRequestDispatcher("_dashboard-add-star.jsp");
+			dispatcher.forward(request, response);	
+		}
+		
+		
+		
+	}
+	
+	private void printMetaData(HttpServletRequest request, 
+				HttpServletResponse response) throws Exception {
+		List<String> metaData = database.getMetadata();
+		request.setAttribute("METADATA", metaData);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("_dashboard-metadata.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	private void addMovie(HttpServletRequest request, 
+				HttpServletResponse response) throws Exception {
+		/* Adds a movie to the database along with a single star and genre
+		 * if movie exists already, update movie with new star and genre
+		 * if new star/genre, inserts star/genre into database and assigns to the inputed movie
+		 */
+		if(request.getParameter("title") != "" && request.getParameter("year") != "" &&
+				request.getParameter("director") != "" && request.getParameter("starLastName") != "" &&
+				request.getParameter("genre") != "") {
+			
+			String title = request.getParameter("title");
+			int year = Integer.parseInt(request.getParameter("year"));
+			String director = request.getParameter("director");
+			String starFirstName = request.getParameter("starFirstName");
+			String starLastName = request.getParameter("starLastName");
+			String genre = request.getParameter("genre");
+			
+			int check = database.addMovie(title, year, director, starFirstName, starLastName, genre);
+			
+			request.setAttribute("SUCCESS", check);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("_dashboard-add-movie.jsp");
+			dispatcher.forward(request, response);
+		}
+		else {
+			request.setAttribute("FAIL", true);
+			RequestDispatcher dispatcher =  request.getRequestDispatcher("_dashboard-add-movie.jsp");
+			dispatcher.forward(request, response);	
+		}
+	}
+
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 
@@ -345,6 +441,18 @@ public class FabflixControllerServlet extends HttpServlet {
 				clearShoppingCart(request, response);
 				break;
 				
+			case "addStar":
+				addStar(request, response);
+				break;
+				
+			case "metaData":
+				printMetaData(request, response);
+				break;
+				
+			case "addMovie":
+				addMovie(request, response);
+				break;
+			
 			default:
 				break;		// do nothing
 			}
@@ -375,6 +483,10 @@ public class FabflixControllerServlet extends HttpServlet {
 			
 			case "creditCardInfo":
 				processPayment(request, response);
+				break;
+				
+			case "employeeLogin":
+				employeeLogin(request, response);
 				break;
 				
 			default:
