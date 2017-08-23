@@ -1,0 +1,17 @@
+1. Download .war file from eee.
+2. Go to your AWS instance and set the security settings.
+3. Go to the instance page and click on connect and copy your public DNS
+4. Open up putty and in the host name put in "ubuntu@_____".
+   (note in the underline you must put in your public DNS that was copied in step 3)
+5. Then under the connection tab click on ssh to expand it.
+6. Then click on auth.
+7. From here find your private key .
+8. After the key is found, run putty.
+9. Then, in the prompt, access your tomcat bin folder by running "cd tomcat/bin".
+10. Run "startup.sh" with the command "./startup.sh".
+11. From here, in a browser put in "http://PUBLIC_IP:8080".
+12. Then click on the manager app and enter in your username and password.
+13. From there scroll down to "WAR file to deploy" and browse for your .war file
+   and deploy it.
+14. Go to "http://PUBLIC_IP:8080/fabflix/login.jsp" to access the login page.
+   (note where it says "PUBLIC_IP" you must put in your public DNS that was copied in step 3)

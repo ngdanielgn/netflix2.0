@@ -47,25 +47,61 @@
 	          </ul>
 	        </div>
 	      </div>
+
+			<div class="row cover-container options-padding text-color">
+			
+			
+				<div class="row">
+						<form action="MovieListServlet" method="GET">
+							<select name="sort">
+								<option value = "title"> Title </option>
+								<option value = "year"> Year </option>
+							</select>
+									
+							<select name="order">
+								<option value  = "ASC"> Ascending </option>
+								<option value = "DESC"> Descending </option>
+							</select>
+							<input class="btn btn-success btn-sm" type = "submit" value = "Sort" />
+						</form>
 	
-	      <div class="inner cover center-wrapper">
-	        <h1 class="cover-heading">Welcome Back</h1>
 	
-	        <p class="lead"> ${CUSTOMER.firstName} </p>
+						<form action="MovieListServlet" method="GET">		
+							<select name="limit">
+								<option value = 10> 10 </option>
+								<option value = 25> 25 </option>
+								<option value = 50> 50 </option>
+								<option value = 100> 100 </option>
+							</select>
+							<input class="btn btn-success btn-sm" type = "submit" value="Sort"/>
+						</form>
 	
-	        <p class="lead"><a class="btn btn-lg btn-info" href="search-view.jsp">Search Now</a></p>
-	      </div>
-	
-	      <div class="mastfoot">
-	        <div class="inner">
-	          <!-- Validation -->
-	
-	
-	          <p>© 2017 CINEPHIM, LLC </p>
-	        </div>
-	      </div>
+					
+				</div>
+			</div>
+			
+			
+			<div class="row cover-container text-color">
+				<table class="table table-responsive table-background">
+			         <thead>
+	                </thead>
+		                
+			        <tbody>
+			        <td>
+				        <c:forEach var = "METADATA"  items = "${METADATA}">
+							<c:out value = "${METADATA}" ></c:out> <br/> <br/>
+						
+						</c:forEach>
+		        	</td>
+			        </tbody>
+			    </table>
+			</div>
+			
+
+		
+		</div>
+
 	    </div>
-	</div>
 	</div>
 
 </body>

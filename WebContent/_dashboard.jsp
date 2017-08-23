@@ -20,48 +20,58 @@
 	    <div class="cover-container">
 	      <div class="masthead clearfix">
 	        <div class="inner">
-	          <h3 class="masthead-brand">C I N E P H I M</h3>
+	          <h3 class="masthead-brand">D A S H B O A R D</h3>
 	
-	          <ul class="nav masthead-nav">	
-		        <li>
-	              <a href="main-page.jsp">Home</a>
-	            </li>
-	                    
-	            <li>
-	              <a href="search-view.jsp">Search</a>
-	            </li>
-	            
-	         	<li>
-	              <a href="Browse.jsp">Browse</a>
-	            </li>
-	
-	            <li>
-	              <a href="shopping-cart-view.jsp">Shopping Cart</a>
-	            </li>
-	            
-	           	<li>
-	              <a href="checkout-view.jsp">Checkout</a>
-	            </li>
-	            
-
-	          </ul>
+	         
 	        </div>
 	      </div>
-	
-	      <div class="inner cover center-wrapper">
+
+
+		<div class="inner cover">
+			
+			
+			</div>	
+			<form class="form-horizontal" action="FabflixControllerServlet" method="GET">
+			<br/>
+			<button type="submit" class="btn btn-success btn-sm" name="command" value="metaData">Print Metadata</button>
+			</form>
+			
+<br/>			
+			
+			<form class="form-horizontal" action="_dashboard-add-star.jsp" >
+			<br/>
+			<button type="submit" class="btn btn-success btn-sm">Add a Star</button>
+			</form>
+			
+<br/>
+			<form class="form-horizontal" action="_dashboard-add-movie.jsp" >
+			<br/>
+			<button type="submit" class="btn btn-success btn-sm">Add a Movie</button>
+			</form>
+			
+			
+				<div>
+				  	<c:if test="${FAIL}">		<!-- Failed star add -->
+				  		<p class="form-title">Need Star's last name</p>
+					</c:if>
+					<c:if test="${SUCCESS}">		<!--  Successful star add -->
+				  		<p class="form-title">Star added</p>
+					</c:if>
+                </div>
+<%-- 
+	      <div class="inner cover">
 	        <h1 class="cover-heading">Welcome Back</h1>
 	
 	        <p class="lead"> ${CUSTOMER.firstName} </p>
 	
 	        <p class="lead"><a class="btn btn-lg btn-info" href="search-view.jsp">Search Now</a></p>
 	      </div>
-	
+--%>		
 	      <div class="mastfoot">
 	        <div class="inner">
 	          <!-- Validation -->
 	
 	
-	          <p>© 2017 CINEPHIM, LLC </p>
 	        </div>
 	      </div>
 	    </div>

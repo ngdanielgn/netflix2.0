@@ -1,9 +1,22 @@
 <Context>
-
-  <Resource name="jdbc/moviedb" 
+ <Resource name="jdbc/moviedb" 
   			auth="Container" type="javax.sql.DataSource"
                maxActive="20" maxIdle="5" maxWait="10000"
-               username="root" password="dani3l" 
+               username="mytestuser" password="mypassword" 
+               driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/moviedb?useSSL=false"/>
+               
+  <Resource name="jdbc/master" 
+  			auth="Container" type="javax.sql.DataSource"
+               maxActive="20" maxIdle="5" maxWait="10000"
+               username="mytestuser" password="mypassword" 
+               driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/moviedb?useSSL=false"/>
+               
+    <Resource name="jdbc/slave" 
+  			auth="Container" type="javax.sql.DataSource"
+               maxActive="20" maxIdle="5" maxWait="10000"
+               username="mytestuser" password="mypassword" 
                driverClassName="com.mysql.jdbc.Driver"
                url="jdbc:mysql://localhost:3306/moviedb?useSSL=false"/>
 
